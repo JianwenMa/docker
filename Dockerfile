@@ -1,3 +1,3 @@
 FROM ubuntu:16.04
-RUN apt-get install update -y
-RUN apt-get -y openssh-server
+RUN apt-get update -y
+RUN apt-get -y install openssh-server
