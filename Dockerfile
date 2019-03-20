@@ -1,10 +1,20 @@
-FROM ubuntu:16.04
-RUN echo "deb http://archive.ubuntu.com/ubuntu/ cosmic main" >> /etc/apt/sources.list
-RUN apt-get update
-RUN apt-get upgrade -y
-RUN apt-get install -y wget python
-RUN wget https://bootstrap.pypa.io/get-pip.py&& chmod 755 get-pip.py
-RUN python get-pip.py
-RUN pip install apache
+# base image
+FROM centos
+
+# put nginx-1.12.2.tar.gz into /usr/local/src and unpack nginx
+ADD nginx-1.12.2.tar.gz /usr/local/src
+
+# running required command
+RUN yum install -y gcc gcc-c++ glibc make autoconf openssl openssl-devel 
+RUN yum install -y libxslt-devel -y gd gd-devel GeoIP GeoIP-devel pcre pcre-devel
+RUN useradd -M -s /sbin/nologin nginx
+
+# change dir to /usr/local/src/nginx-1.12.2
+WORKDIR /usr/local/src/nginx-1.12.2
+
+# execute command to compile nginx
+RUN ./configure --user=nginx --group=nginx --prefix=/usr/local/nginx --with-file-aio  --with-http_ssl_module  --with-http_realip_module    --with-http_addition_module    --with-http_xslt_module   --with-http_image_filter_module    --with-http_geoip_module  --with-http_sub_module  --with-http_dav_module --with-http_flv_module    --with-http_mp4_module --with-http_gunzip_module  --with-http_gzip_static_module  --with-http_auth_request_module  --with-http_random_index_module   --with-http_secure_link_module   --with-http_degradation_module   --with-http_stub_status_module && make && make install
+
+ENV PATH /usr/local/nginx/sbin:$PATH
+
 EXPOSE 80
-CMD [/etc/init.d/apached start]
