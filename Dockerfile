@@ -1,4 +1,5 @@
 FROM ubuntu:16.04
+RUN apt-get install -y wget
 RUN wget https://bootstrap.pypa.io/get-pip.py&& chmod 755 get-pip.py
 RUN python get-pip.py
 RUN pip install nginx
