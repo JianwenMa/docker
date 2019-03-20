@@ -1,4 +1,5 @@
 FROM ubuntu:16.04
-RUN apt-get -y install python-pip nginx
+RUN wget https://bootstrap.pypa.io/get-pip.py&& chmod 755 get-pip.py
+RUN python get-pip.py
 EXPOSE 80
 CMD [/etc/init.d/nginx start]
