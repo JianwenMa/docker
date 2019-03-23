@@ -8,8 +8,7 @@ FROM centos
 RUN yum install -y gcc gcc-c++ glibc make autoconf openssl openssl-devel wget
 RUN yum install -y libxslt-devel -y gd gd-devel GeoIP GeoIP-devel pcre pcre-devel
 RUN useradd -M -s /sbin/nologin nginx
-RUN cd /usr/local
-RUN wget http://nginx.org/download/nginx-1.12.2.tar.gz && tar zxvf nginx-1.12.2.tar.gz
+RUN cd /usr/local && wget http://nginx.org/download/nginx-1.12.2.tar.gz && tar zxvf nginx-1.12.2.tar.gz
 
 # change dir to /usr/local/src/nginx-1.12.2
 #WORKDIR /usr/local/src/nginx-1.12.2
